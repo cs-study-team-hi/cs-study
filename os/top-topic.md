@@ -132,3 +132,59 @@ n개인 카운팅 세마포어로 나뉘는데,
 이렇게 답하면 됩니다.
 
 </details>
+
+
+<details>
+<summary>
+
+## Q. 프로세스 동기화에 대해 설명해보세요.
+</summary>
+
+### ⏱️ 45초 버전
+
+프로세스 동기화란, 여러 프로세스(또는 스레드)가 공유 자원에 동시에 접근할 때 
+발생하는 **Race Condition**을 방지하기 위한 메커니즘입니다.
+핵심 개념은 **Critical Section**으로, 공유 자원에 접근하는 코드 구간을 의미합니다. 
+이 구간에는 세 가지 조건이 보장되어야 합니다. **Mutual Exclusion**(한 번에 하나의 프로세스만 진입),
+**Progress**(진입 프로세스가 없으면 대기 중인 프로세스가 진입 가능), **Bounded Waiting**(무한 대기 방지)입니다.
+대표적인 구현 수단으로는 **Mutex, Semaphore**가 있으며, Java에서는 `synchronized`, `Lock`, `BlockingQueue` 등으로 활용됩니다.
+
+---
+
+### ⏱️ 1분 버전
+
+프로세스 동기화는 멀티태스킹·멀티프로세싱 환경에서 여러 프로세스가 공유 자원에 동시 
+접근할 때 발생하는 **Race Condition** 문제를 해결하기 위한 기법입니다.
+해결의 핵심은 **Critical Section 보호**이며, 이를 위해 세 가지 조건이 필요합니다.
+
+1. **Mutual Exclusion** : 한 프로세스가 Critical Section에 진입하면 다른 프로세스는 진입 불가
+2. **Progress** : Critical Section이 비어 있으면 대기 중인 프로세스가 즉시 진입 가능
+3. **Bounded Waiting** : 특정 프로세스가 무한히 대기하지 않도록 보장
+
+구현 방법으로는 **Mutex**(이진 락으로 상호 배제 보장)와 **Semaphore**(카운터 기반으로 여러 자원 관리)가 대표적입니다.
+Java에서는 `synchronized` 키워드, `ReentrantLock`, `BlockingQueue` 등을 통해 실제 스레드 동기화를 구현하며, 
+이때 **Deadlock**(교착 상태)이 발생하지 않도록 락 순서 관리도 중요합니다.
+
+---
+
+### ⏱️ 1분 10초 버전
+
+프로세스 동기화는 멀티프로세싱·멀티스레딩 환경에서 **공유 자원에 대한 동시 접근으로 인한 Race Condition**을 방지하고, 실행 결과의 일관성을 보장하는 기법입니다.
+
+**Critical Section** 보호를 위한 세 가지 필수 조건은 다음과 같습니다.
+
+| 조건 | 설명 |
+|------|------|
+| Mutual Exclusion | 한 번에 하나의 프로세스만 Critical Section 진입 |
+| Progress | CS가 비어 있으면 대기 프로세스가 즉시 진입 가능 |
+| Bounded Waiting | 특정 프로세스의 무한 대기 방지 |
+
+주요 구현 메커니즘은 아래와 같습니다.
+
+- **Mutex** : 이진(0/1) 락으로 완전한 상호 배제 보장
+- **Semaphore** : 카운터 기반으로 복수 자원 접근 제어 (Binary / Counting)
+- **Monitor** : 고수준 동기화 추상화, Java의 `synchronized`가 이에 해당
+
+Java 실무에서는 `ReentrantLock`, `BlockingQueue`, `volatile` 키워드 등을 활용하며, 동기화를 잘못 설계하면 **Deadlock**(상호 대기), **Starvation**(자원 독점으로 특정 프로세스 무한 대기) 문제가 발생할 수 있어 락 획득 순서를 일관되게 유지하는 것이 중요합니다.
+
+</details>
